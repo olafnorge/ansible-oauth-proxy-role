@@ -1,0 +1,274 @@
+---
+oauth_olafnorge_de_compose:
+  version: "3.7"
+  services:
+    oauth:
+      deploy:
+        labels: "{{ oauth_olafnorge_de_labels }}"
+        placement:
+          constraints:
+            - node.role != manager
+        mode: global
+        restart_policy:
+          condition: on-failure
+          delay: 5s
+          max_attempts: 5
+          window: 300s
+        update_config:
+          failure_action: rollback
+          monitor: 120s
+      environment:
+        - APP_DEBUG={{ oauth_olafnorge_de_environment.app_debug | default('false') }}
+        - APP_ENV={{ oauth_olafnorge_de_environment.app_env | default('development') }}
+        - APP_FALLBACK_LOCALE={{ oauth_olafnorge_de_environment.app_fallback_locale | default('en') }}
+        - APP_HOST={{ oauth_olafnorge_de_environment.app_host | default('oauth.example.com') }}
+        - APP_KEY={{ oauth_olafnorge_de_environment.app_key }}
+        - APP_LOCALE={{ oauth_olafnorge_de_environment.app_locale | default('en') }}
+        - AUTH_GUARD={{ oauth_olafnorge_de_environment.auth_guard | default('api') }}
+        - BROADCAST_DRIVER={{ oauth_olafnorge_de_environment.broadcast_driver | default('pusher') }}
+        - BROADCAST_REDIS_CONNECTION={{ oauth_olafnorge_de_environment.broadcast_redis_connection | default('default') }}
+        - CACHE_DATABASE_CONNECTION={{ oauth_olafnorge_de_environment.cache_database_connection | default('null') }}
+        - CACHE_DATABASE_TABLE={{ oauth_olafnorge_de_environment.cache_database_table | default('cache') }}
+        - CACHE_DRIVER={{ oauth_olafnorge_de_environment.cache_driver | default('file') }}
+        - CACHE_PREFIX={{ oauth_olafnorge_de_environment.cache_prefix | default('oauth') }}
+        - CACHE_REDIS_CONNECTION={{ oauth_olafnorge_de_environment.cache_redis_connection | default('default') }}
+        - DB_CHARSET={{ oauth_olafnorge_de_environment.db_charset | default('utf8mb4') }}
+        - DB_COLLATION={{ oauth_olafnorge_de_environment.db_collation | default('utf8mb4_unicode_ci') }}
+        - DB_CONNECTION={{ oauth_olafnorge_de_environment.db_connection | default('mysql') }}
+        - DB_DATABASE={{ oauth_olafnorge_de_environment.db_database | default('oauth') }}
+        - DB_HOST={{ oauth_olafnorge_de_environment.db_host | default('database') }}
+        - DB_PASSWORD={{ oauth_olafnorge_de_environment.db_password }}
+        - DB_PORT={{ oauth_olafnorge_de_environment.db_port | default('3306') }}
+        - DB_PREFIX={{ oauth_olafnorge_de_environment.db_prefix | default('') }}
+        - DB_SCHEMA={{ oauth_olafnorge_de_environment.db_schema | default('public') }}
+        - DB_STRICT_MODE={{ oauth_olafnorge_de_environment.db_strict_mode | default('false') }}
+        - DB_TIMEZONE={{ oauth_olafnorge_de_environment.db_timezone | default('+00:00') }}
+        - DB_USERNAME={{ oauth_olafnorge_de_environment.db_username | default('oauth') }}
+        - GITHUB_CLIENT_ID={{ oauth_olafnorge_de_environment.github_client_id | default('null') }}
+        - GITHUB_CLIENT_SECRET={{ oauth_olafnorge_de_environment.github_client_secret | default('null') }}
+        - GITHUB_REDIRECT={{ oauth_olafnorge_de_environment.github_redirect | default('https://oauth.example.com/') }}
+        - GOOGLE_CLIENT_ID={{ oauth_olafnorge_de_environment.google_client_id | default('null') }}
+        - GOOGLE_CLIENT_SECRET={{ oauth_olafnorge_de_environment.google_client_secret | default('null') }}
+        - GOOGLE_REDIRECT={{ oauth_olafnorge_de_environment.google_redirect | default('https://oauth.example.com/') }}
+        - LINKEDIN_CLIENT_ID={{ oauth_olafnorge_de_environment.linkedin_client_id | default('null') }}
+        - LINKEDIN_CLIENT_SECRET={{ oauth_olafnorge_de_environment.linkedin_client_secret | default('null') }}
+        - LINKEDIN_REDIRECT={{ oauth_olafnorge_de_environment.linkedin_redirect | default('https://oauth.example.com/') }}
+        - LOCK_DRIVER={{ oauth_olafnorge_de_environment.lock_driver | default('semaphore') }}
+        - LOCK_REDIS_CONNECTION={{ oauth_olafnorge_de_environment.lock_redis_connection | default('default') }}
+        - LOG_CHANNEL={{ oauth_olafnorge_de_environment.log_channel | default('stack') }}
+        - LOG_LEVEL={{ oauth_olafnorge_de_environment.log_level | default('debug') }}
+        - LOG_SLACK_WEBHOOK_URL={{ oauth_olafnorge_de_environment.log_slack_webhook_url | default('null') }}
+        - LOG_STACK_CHANNELS={{ oauth_olafnorge_de_environment.log_stack_channels | default('[]') | join(',') }}
+        - MEMCACHED_HOST={{ oauth_olafnorge_de_environment.memcached_host | default('127.0.0.1') }}
+        - MEMCACHED_PORT={{ oauth_olafnorge_de_environment.memcached_port | default('11211') }}
+        - PUSHER_APP_ID={{ oauth_olafnorge_de_environment.pusher_app_id | default('null') }}
+        - PUSHER_KEY={{ oauth_olafnorge_de_environment.pusher_key | default('null') }}
+        - PUSHER_SECRET={{ oauth_olafnorge_de_environment.pusher_secret | default('null') }}
+        - QUEUE_DRIVER={{ oauth_olafnorge_de_environment.queue_driver | default('sync') }}
+        - QUEUE_FAILED_TABLE={{ oauth_olafnorge_de_environment.queue_failed_table | default('failed_jobs') }}
+        - QUEUE_REDIS_CONNECTION={{ oauth_olafnorge_de_environment.queue_redis_connection | default('default') }}
+        - REDIS_CLIENT={{ oauth_olafnorge_de_environment.redis_client | default('predis') }}
+        - REDIS_CLUSTER={{ oauth_olafnorge_de_environment.redis_cluster | default('false') }}
+        - REDIS_DATABASE={{ oauth_olafnorge_de_environment.redis_database | default('0') }}
+        - REDIS_HOST={{ oauth_olafnorge_de_environment.redis_host | default('redis') }}
+        - REDIS_PASSWORD={{ oauth_olafnorge_de_environment.redis_password | default('null') }}
+        - REDIS_PORT={{ oauth_olafnorge_de_environment.redis_port | default('6379') }}
+        - ROLLBAR_BRANCH={{ oauth_olafnorge_de_environment.rollbar_branch | default('master') }}
+        - ROLLBAR_CODE_VERSION={{ oauth_olafnorge_de_environment.rollbar_code_version | default('master') }}
+        - ROLLBAR_ENABLED={{ oauth_olafnorge_de_environment.rollbar_enabled | default('false') }}
+        - ROLLBAR_ENVIRONMENT={{ oauth_olafnorge_de_environment.app_env | default('development') }}
+        - ROLLBAR_FRAMEWORK=lumen
+        - ROLLBAR_HOST={{ oauth_olafnorge_de_environment.app_host | default('oauth.example.com') }}
+        - ROLLBAR_LEVEL={{ oauth_olafnorge_de_environment.log_level | default('debug') }}
+        - ROLLBAR_TOKEN={{ oauth_olafnorge_de_environment.rollbar_token | default('' | hash('md5')) }}
+        - SQS_SECRET_KEY={{ oauth_olafnorge_de_environment.sqs_secret_key | default('') }}
+      image: "olafnorge/oauth:{{ oauth_olafnorge_de_version }}"
+      networks: "{{ oauth_olafnorge_de_networks }}"
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/timezone:/etc/timezone:ro
+    database:
+      deploy:
+        placement:
+          constraints:
+            - node.role != manager
+        replicas: 1
+        restart_policy:
+          condition: on-failure
+          delay: 5s
+          max_attempts: 5
+          window: 300s
+        update_config:
+          failure_action: rollback
+          monitor: 120s
+      environment:
+        - MYSQL_DATABASE={{ oauth_olafnorge_de_environment.db_database | default('oauth') }}
+        - MYSQL_USER={{ oauth_olafnorge_de_environment.db_username | default('oauth') }}
+        - MYSQL_PASSWORD{{ '_FILE' if oauth_olafnorge_de_use_secrets else '' }}={{ '/run/secrets/' if oauth_olafnorge_de_use_secrets else '' }}{{ oauth_olafnorge_de_environment.db_password | default('') }}
+        - MYSQL_ROOT_PASSWORD{{ '_FILE' if oauth_olafnorge_de_use_secrets else '' }}={{ '/run/secrets/' if oauth_olafnorge_de_use_secrets else '' }}{{ oauth_olafnorge_de_environment.db_root_password | default('') }}
+      image: mysql:5.7
+      networks:
+        - "{{ oauth_olafnorge_de_network_internal }}"
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/timezone:/etc/timezone:ro
+    redis:
+      deploy:
+        placement:
+          constraints:
+            - node.role != manager
+        replicas: 1
+        restart_policy:
+          condition: on-failure
+          delay: 5s
+          max_attempts: 5
+          window: 300s
+        update_config:
+          failure_action: rollback
+          monitor: 120s
+      image: redis:4-alpine
+      networks:
+        - "{{ oauth_olafnorge_de_network_internal }}"
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/timezone:/etc/timezone:ro
+    xtrabackup:
+      command: cron -f -l -L15
+      configs:
+        - source: "oauth-crontab-{{ oauth_olafnorge_de_crontab_templated.checksum[:10] }}"
+          target: /etc/cron.d/crontab
+          uid: '0'
+          gid: '0'
+          mode: 0644
+      deploy:
+        placement:
+          constraints:
+            - node.role != manager
+        replicas: 1
+        restart_policy:
+          condition: on-failure
+          delay: 5s
+          max_attempts: 5
+          window: 300s
+        update_config:
+          failure_action: rollback
+          monitor: 120s
+      image: olafnorge/xtrabackup:2.4
+      networks:
+        - "{{ oauth_olafnorge_de_network_internal }}"
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/timezone:/etc/timezone:ro
+  networks: "{{ oauth_olafnorge_de_network_definitions }}"
+  configs: "{{ oauth_olafnorge_de_configs_dict }}"
+
+oauth_olafnorge_de_crontab_path: "/root/{{ oauth_olafnorge_de_name }}-crontab"
+oauth_olafnorge_de_labels: []
+oauth_olafnorge_de_crons:
+  - interval: '* * * * *'
+    user: root
+    command: echo 'every minute'
+oauth_olafnorge_de_name: oautholafnorgede
+oauth_olafnorge_de_network_definitions: []
+oauth_olafnorge_de_network_internal: internal
+oauth_olafnorge_de_networks:
+  - "{{ oauth_olafnorge_de_network_internal }}"
+oauth_olafnorge_de_use_secrets: yes
+oauth_olafnorge_de_version: latest
+
+oauth_olafnorge_de_environment:
+  app_debug: "false"
+  app_env: production
+  app_fallback_locale: en
+  app_host: oauth.example.com
+  app_key: "{{ oauth_olafnorge_de_secrets.app_key.name if oauth_olafnorge_de_use_secrets else oauth_olafnorge_de_app_key }}"
+  app_locale: en
+  auth_guard: api
+  broadcast_driver: pusher
+  broadcast_redis_connection: default
+  cache_database_connection: "null"
+  cache_database_table: cache
+  cache_driver: redis
+  cache_prefix: oauth
+  cache_redis_connection: default
+  db_charset: utf8mb4
+  db_collation: utf8mb4_unicode_ci
+  db_connection: mysql
+  db_database: oauth
+  db_host: database
+  db_password: "{{ oauth_olafnorge_de_secrets.db_password.name if oauth_olafnorge_de_use_secrets else oauth_olafnorge_de_db_password }}"
+  db_port: 3306
+  db_prefix: ""
+  db_root_password: "{{ oauth_olafnorge_de_secrets.db_root_password.name if oauth_olafnorge_de_use_secrets else oauth_olafnorge_de_db_root_password }}"
+  db_schema: public
+  db_strict_mode: "false"
+  db_timezone: "+00:00"
+  db_username: oauth
+  github_client_id:
+  github_client_secret: "{{ oauth_olafnorge_de_secrets.github_client_secret.name if oauth_olafnorge_de_use_secrets else oauth_olafnorge_de_github_client_secret }}"
+  github_redirect: https://oauth.example.com/
+  google_client_id:
+  google_client_secret: "{{ oauth_olafnorge_de_secrets.google_client_secret.name if oauth_olafnorge_de_use_secrets else oauth_olafnorge_de_google_client_secret }}"
+  google_redirect: https://oauth.example.com/
+  linkedin_client_id:
+  linkedin_client_secret: "{{ oauth_olafnorge_de_secrets.linkedin_client_secret.name if oauth_olafnorge_de_use_secrets else oauth_olafnorge_de_linkedin_client_secret }}"
+  linkedin_redirect: https://oauth.example.com/
+  lock_driver: redis
+  lock_redis_connection: default
+  log_channel: stack
+  log_level: error
+  log_slack_webhook_url: "null"
+  log_stack_channels:
+    - errorlog
+    - rollbar
+  memcached_host: 127.0.0.1
+  memcached_port: 11211
+  pusher_app_id: "null"
+  pusher_key: "null"
+  pusher_secret: "null"
+  queue_driver: sync
+  queue_failed_table: failed_jobs
+  queue_redis_connection: default
+  redis_client: phpredis
+  redis_cluster: "false"
+  redis_database: 0
+  redis_host: "redis"
+  redis_password: "null"
+  redis_port: 6379
+  rollbar_branch: "{{ oauth_olafnorge_de_version }}"
+  rollbar_code_version: "{{ oauth_olafnorge_de_version }}"
+  rollbar_enabled: "true"
+  rollbar_token: "{{ oauth_olafnorge_de_secrets.rollbar_token.name if oauth_olafnorge_de_use_secrets else oauth_olafnorge_de_rollbar_token }}"
+  sqs_secret_key: ""
+
+oauth_olafnorge_de_secrets:
+  app_key:
+    data: "{{ oauth_olafnorge_de_app_key }}"
+    name: oauth_olafnorge_de_app_key
+  db_password:
+    data: "{{ oauth_olafnorge_de_db_password }}"
+    name: oauth_olafnorge_de_db_password
+  db_root_password:
+    data: "{{ oauth_olafnorge_de_db_root_password }}"
+    name: oauth_olafnorge_de_db_root_password
+  github_client_secret:
+    data: "{{ oauth_olafnorge_de_github_client_secret }}"
+    name: oauth_olafnorge_de_github_client_secret
+  google_client_secret:
+    data: "{{ oauth_olafnorge_de_google_client_secret }}"
+    name: oauth_olafnorge_de_google_client_secret
+  linkedin_client_secret:
+    data: "{{ oauth_olafnorge_de_linkedin_client_secret }}"
+    name: oauth_olafnorge_de_linkedin_client_secret
+  rollbar_token:
+    data: "{{ oauth_olafnorge_de_rollbar_token }}"
+    name: oauth_olafnorge_de_rollbar_token
+
+# vaults, you may define them in a separate file which overrides these defaults
+oauth_olafnorge_de_app_key: # FIXME: add your vault here using 'ansible-vault'
+oauth_olafnorge_de_db_password: # FIXME: add your vault here using 'ansible-vault'
+oauth_olafnorge_de_db_root_password: # FIXME: add your vault here using 'ansible-vault'
+oauth_olafnorge_de_github_client_secret: # FIXME: add your vault here using 'ansible-vault'
+oauth_olafnorge_de_google_client_secret: # FIXME: add your vault here using 'ansible-vault'
+oauth_olafnorge_de_linkedin_client_secret: # FIXME: add your vault here using 'ansible-vault'
+oauth_olafnorge_de_rollbar_token: # FIXME: add your vault here using 'ansible-vault'
